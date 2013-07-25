@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.program.collectorz"
+       name="Collectorz"
+       version="0.0.1"
+       provider-name="Chanan Zupnick">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+	<provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>Find movies missing from your movie collection</summary>
+    <description>Scan through your movies and find movies missing from your collection.</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
