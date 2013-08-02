@@ -1,6 +1,7 @@
 import xbmc
 import xbmcplugin
 import urllib
+import sys
 from lib.collectorz import *
 try:
     import StorageServer
@@ -64,5 +65,6 @@ elif menu_number == 2:
     xbmc.Player(xbmc.PLAYER_CORE_MPLAYER).play(url)
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))        
+
 
 

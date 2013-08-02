@@ -4,8 +4,7 @@ import json
 import xbmcgui
 import xbmcplugin
 import xbmc
-
-API_KEY = "aba0b2149e9390bccb85fa864dd60343"
+import sys
 
 class Movie(object):
     def __init__(self,title,id,collection_id,poster_path,own = False):
@@ -110,3 +109,6 @@ def display_missing_movies(collection):
     for movie in collection.movies:
         if not movie.own:
             addMovieDirectory(movie.title, movie.id, 2, movie.poster_path)
+
+API_KEY = "aba0b2149e9390bccb85fa864dd60343"
+base_image_url = get_tmdb_configuration() + "original"
