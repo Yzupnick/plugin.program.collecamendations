@@ -1,6 +1,7 @@
 *.py[cod]
 *.py~
 *.txt~
+*.xml~
 *.gitignore~
 
 # C extensions
@@ -18,7 +19,6 @@ var
 sdist
 develop-eggs
 .installed.cfg
-lib
 lib64
 __pycache__
 
@@ -40,5 +40,6 @@ nosetests.xml
 
 #Databases
 *.db
+
 
 env/
