@@ -4,6 +4,11 @@ import json
 import xbmc
 import xbmcgui
 import xbmcplugin
+try:
+   import StorageServer
+ except:
+   import lib.storageserverdummy as StorageServer
+cache = StorageServer.StorageServer("collectorz", 8) # (Your plugin name, Cache time in hours
 
 API_KEY = "aba0b2149e9390bccb85fa864dd60343"
 
@@ -135,8 +140,8 @@ def getParameters():
 
 
 base_image_url = get_tmdb_configuration() + "original"
-collections = organize_movies_by_collections(get_xbmc_movies())
-
+imdb_ids = get_xbmc_movies()
+collections = cache.cacheFunction(organize_movies_by_collections,imdb_ids)
           
 # Initialize URL parameters
 id = None
