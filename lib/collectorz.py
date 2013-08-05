@@ -59,7 +59,7 @@ def organize_movies_by_collections(imdb_ids):
         
         if current_movie.collection_id is not None:  
             if current_movie.collection_id in collections:
-                current_collection = collection[current_movie.collection_id]
+                current_collection = collections[current_movie.collection_id]
             else:
                 current_collection = get_collection(current_movie.collection_id)
                 collections[current_movie.collection_id] = current_collection
