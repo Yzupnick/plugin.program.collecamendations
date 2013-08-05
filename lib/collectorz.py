@@ -7,7 +7,7 @@ import xbmc
 import sys
 
 class Movie(object):
-    def __init__(self,title,id,collection_id,poster_path,own = False,imdb_id):
+    def __init__(self,title,id,collection_id,poster_path,,imdb_id,own = False):
         self.title = title
         self.id = id
         self.own = own
