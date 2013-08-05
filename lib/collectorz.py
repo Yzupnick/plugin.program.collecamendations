@@ -13,7 +13,7 @@ class Movie(object):
         self.own = own
         self.collection_id = collection_id
         self.poster_path = poster_path
-        self.imdb_id = 
+        self.imdb_id = imdb_id
 
 class Collection(object):
     def __init__(self,name,id,poster_path,own_all = False):
