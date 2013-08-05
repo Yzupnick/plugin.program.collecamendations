@@ -87,7 +87,7 @@ def addMovieDirectory(movie_name, movie_id, menu_number, thumbnail_path,imdb_id)
     CP_ADD_VIA_IMDB = 'XBMC.RunPlugin(plugin://plugin.video.couchpotato_manager/movies/add?imdb_id=%s)'
     TRAKT_ADD_URL = 'XBMC.RunPlugin(plugin://plugin.video.trakt_list_manager/movies/add?imdb_id=%s)'
     list_item.addContextMenuItems([('Add Movie to CouchPotato', CP_ADD_VIA_IMDB % imdb_id)])
-    list_item..addContextMenuItems([('Add Movie on Trakt.tv', TRAKT_ADD_URL % imdb_id)])
+    list_item.addContextMenuItems([('Add Movie on Trakt.tv', TRAKT_ADD_URL % imdb_id)])
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=return_url, listitem=list_item, isFolder=False) 
 
 
