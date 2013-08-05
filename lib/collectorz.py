@@ -7,13 +7,14 @@ import xbmc
 import sys
 
 class Movie(object):
-    def __init__(self,title,id,collection_id,poster_path,own = False):
+    def __init__(self,title,id,collection_id,poster_path,own = False,imdb_id):
         self.title = title
         self.id = id
         self.own = own
         self.collection_id = collection_id
         self.poster_path = poster_path
-        
+        self.imdb_id = 
+
 class Collection(object):
     def __init__(self,name,id,poster_path,own_all = False):
         self.name = name
@@ -34,12 +35,12 @@ def get_trailer_from_tmdb(tmdb_id):
     data = json.loads(response)
     return data['youtube'][0]["source"]
 
-def get_movie_by_imdb_id(imdb_id):
-    request = urllib2.Request("http://api.themoviedb.org/3/movie/%s?api_key=%s" % (imdb_id,API_KEY), headers={"Accept" : "application/json"})
+def get_movie_by_id(id):
+    request = urllib2.Request("http://api.themoviedb.org/3/movie/%s?api_key=%s" % (id,API_KEY), headers={"Accept" : "application/json"})
     response = urllib2.urlopen(request).read()
     data = json.loads(response)
     collection = str(data["belongs_to_collection"]['id']) if data["belongs_to_collection"]  is not None else None
-    movie = Movie(title=data['title'], id=str(data['id']),collection_id=collection,poster_path=base_image_url + data["poster_path"])
+    movie = Movie(title=data['title'], id=str(data['id']),collection_id=collection,poster_path=base_image_url + data["poster_path"],imdb_id=data["imdb_id"])
     return movie
 
 def get_collection(collection_id):
@@ -55,7 +56,7 @@ def get_collection(collection_id):
 def organize_movies_by_collections(imdb_ids):
     collections ={}
     for imdb_id in imdb_ids:
-        current_movie = get_movie_by_imdb_id(imdb_id)
+        current_movie = get_movie_by_id(imdb_id)
         
         if current_movie.collection_id is not None:  
             if current_movie.collection_id in collections:
@@ -80,10 +81,14 @@ def addCollectionDirectory(collection_name, collection_id, menu_number, thumbnai
     list_item = xbmcgui.ListItem(collection_name, thumbnailImage=thumbnail_path)
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=return_url, listitem=list_item, isFolder=True, totalItems=movie_total)
     
-def addMovieDirectory(movie_name, movie_id, menu_number, thumbnail_path):
+def addMovieDirectory(movie_name, movie_id, menu_number, thumbnail_path,imdb_id):
     return_url = sys.argv[0]+"?id="+urllib.quote_plus(str(movie_id))+"&mode="+str(menu_number)+"&name="+urllib.quote_plus(movie_name.encode( "utf-8" ))
     list_item = xbmcgui.ListItem(movie_name, thumbnailImage=thumbnail_path)
-    xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=return_url, listitem=list_item, isFolder=False)
+    CP_ADD_VIA_IMDB = 'XBMC.RunPlugin(plugin://plugin.video.couchpotato_manager/movies/add?imdb_id=%s)'
+    TRAKT_ADD_URL = 'XBMC.RunPlugin(plugin://plugin.video.trakt_list_manager/movies/add?imdb_id=%s)'
+    list_item.addContextMenuItems([('Add Movie to CouchPotato', CP_ADD_VIA_IMDB % imdb_id)])
+    list_item..addContextMenuItems([('Add Movie on Trakt.tv', TRAKT_ADD_URL % imdb_id)])
+    xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=return_url, listitem=list_item, isFolder=False) 
 
 
 def get_xbmc_movies():
@@ -108,7 +113,7 @@ def display_collection_menu(collections):
 def display_missing_movies(collection):
     for movie in collection.movies:
         if not movie.own:
-            addMovieDirectory(movie.title, movie.id, 2, movie.poster_path)
+            addMovieDirectory(movie.title, movie.id, 2, movie.poster_path,movie.imdb_id)
 
 API_KEY = "aba0b2149e9390bccb85fa864dd60343"
 base_image_url = get_tmdb_configuration() + "original"
