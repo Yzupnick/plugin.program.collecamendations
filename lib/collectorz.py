@@ -49,7 +49,7 @@ def get_collection(collection_id):
     data = json.loads(response)
     collection = Collection(name=data["name"],id=str(data["id"]),poster_path=base_image_url + data["poster_path"])
     for part in data["parts"]:
-        movie = Movie(title=part['title'], id=str(part['id']),own=False,collection_id=collection.id,poster_path= base_image_url + part["poster_path"])
+        movie = Movie(title=part['title'], id=str(part['id']),own=False,collection_id=collection.id,poster_path= base_image_url + part["poster_path"],imdb_id=data["imdb_id"])
         collection.movies.append(movie)
     return collection
 
