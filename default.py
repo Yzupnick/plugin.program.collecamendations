@@ -7,12 +7,12 @@ import buggalo
 buggalo.GMAIL_RECIPIENT = "chazup@gmail.com"
 
 try:
-    from lib.collectorz import *
+    from lib.collecamendations import *
     try:
         import StorageServer
     except:
         import lib.storageserverdummy as StorageServer
-    cache = StorageServer.StorageServer("collectorz", 8) # (Your plugin name, Cache time in hours
+    cache = StorageServer.StorageServer("collecamendations", 8) # (Your plugin name, Cache time in hours
 
     def getParameters():
             param=[]
